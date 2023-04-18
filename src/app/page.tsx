@@ -5,6 +5,7 @@ import style from "./page.module.css";
 import { useState } from "react";
 import * as EmailValidator from 'email-validator';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
+import { createPost } from "./api/api";
 
 export default function Home() {
   const[name, setName] = useState("Nome");
@@ -15,7 +16,7 @@ export default function Home() {
   const[city, setCity] = useState("Cidade/Estado");
   const[sector, setSector] = useState("Setor");
 
-  function submit() {
+  function handleSubmit() {
     if (!name || name === "Nome"){
       return setName('');
     }
@@ -46,15 +47,9 @@ export default function Home() {
       return setSector("");
     }
 
-    return window.alert("deu certo")
-  }
-
-  function saveOnDatabase () {
     const data = { name, email, phone, cnpj, enterpriseName, city, sector }
-    // const response = await api.post(create/, data);
-    // return console.log(response);
+    return createPost(data)
   }
-
 
   return (
     <div className={style.maxWidth}>
@@ -103,7 +98,7 @@ export default function Home() {
             <MenuItem value={"Outro"}>Outro</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" onClick={submit} > Cadastrar</Button>
+      <Button variant="contained" onClick={handleSubmit} > Cadastrar</Button>
       </Stack>
     </div>
   )
