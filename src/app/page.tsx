@@ -1,102 +1,110 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+"use client";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import style from "./page.module.css";
+import { useState } from "react";
+import * as EmailValidator from 'email-validator';
+import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 
 export default function Home() {
+  const[name, setName] = useState("Nome");
+  const[email, setEmail] = useState("Email");
+  const[phone, setPhone] = useState("Telefone");
+  const[cnpj, setCnpj] = useState("Cnpj");
+  const[enterpriseName, setEnterPriseName] = useState("Nome da Empresa");
+  const[city, setCity] = useState("Cidade/Estado");
+  const[sector, setSector] = useState("Setor");
+
+  function submit() {
+    if (!name || name === "Nome"){
+      return setName('');
+    }
+
+    const emailValidator = EmailValidator.validate(email);
+    if(!emailValidator || !email ){
+      return setEmail("");
+    }
+
+    if (phone.length !== 11 || !phone || phone === "Telefone"){
+      return setPhone("");
+    }
+
+    const cnpjValidate = cnpjValidator.isValid(cnpj) ;
+    if (!cnpjValidate || !cnpj ){
+      return setCnpj("");
+    }
+
+    if(!enterpriseName || enterpriseName === "Nome da Empresa"){
+      return setEnterPriseName("");
+    }
+
+    if(!city || city === "Cidade/Estado"){
+      return setCity("");
+    }
+
+    if(!sector || sector === "Setor"){
+      return setSector("");
+    }
+
+    return window.alert("deu certo")
+  }
+
+  function saveOnDatabase () {
+    const data = { name, email, phone, cnpj, enterpriseName, city, sector }
+    // const response = await api.post(create/, data);
+    // return console.log(response);
+  }
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className={style.maxWidth}>
+      <Stack
+      component="form"
+      sx={{
+        width: '22%',
+        height:'77%'
+      }}
+      spacing={1}
+      noValidate
+      autoComplete="off"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor={"white"}
+      borderRadius={2}
+      >
+        <TextField id="filled-basic" label="Nome" variant="filled" error={!name?true:false} required={!name?true:false} onChange={(e) => setName(e.target.value)} />
+        <TextField id="filled-basic" label="Email" variant="filled" error={!email?true:false} required={!email?true:false} onChange={(e) => setEmail(e.target.value)} type="email"/>
+        <TextField id="filled-basic" label="Telefone" variant="filled" error={!phone?true:false} required={!phone?true:false} onChange={(e) => setPhone(e.target.value)} type="tel"/>
+        <TextField id="filled-basic" label="CNPJ" variant="filled" onChange={(e) => setCnpj(e.target.value)} error={!cnpj?true:false} required={!cnpj?true:false} type="number"/>
+        <TextField id="filled-basic" label="Nome da Empresa" variant="filled" error={!enterpriseName?true:false} required={!enterpriseName?true:false} onChange={(e) => setEnterPriseName(e.target.value)}/>
+        <TextField id="filled-basic" label="Cidade/Estado" variant="filled" error={!email?true:false} required={!email?true:false} onChange={(e) => setCity(e.target.value)}/>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <FormControl sx={{ m: 1, width: 230 }}>
+        <InputLabel id="demo-simple-select-label">Setor</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={sector}
+          label="Setor"
+          error={!sector?true:false} required={!sector?true:false}
+          onChange={(e) => setSector(e.target.value as string)}
+>
+            <MenuItem value={"Utilidades Domesticas"}>Utilidades Domesticas</MenuItem>
+            <MenuItem value={"Brinquedos"}>Brinquedos</MenuItem>
+            <MenuItem value={"Puericultura"}>Puericultura</MenuItem>
+            <MenuItem value={"Festas"}>Festas</MenuItem>
+            <MenuItem value={"Descartaveis"}>Descartaveis</MenuItem>
+            <MenuItem value={"Variedades"}>Variedades</MenuItem>
+            <MenuItem value={"Decoração"}>Decoração</MenuItem>
+            <MenuItem value={"Moda"}>Moda</MenuItem>
+            <MenuItem value={"Confecções"}>Confecções</MenuItem>
+            <MenuItem value={"Calçados"}>Calçados</MenuItem>
+            <MenuItem value={"Outro"}>Outro</MenuItem>
+        </Select>
+      </FormControl>
+      <Button variant="contained" onClick={submit} > Cadastrar</Button>
+      </Stack>
+    </div>
   )
 }
