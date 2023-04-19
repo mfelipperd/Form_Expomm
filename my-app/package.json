@@ -19,6 +19,7 @@
     "email-validator": "^2.0.4",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "js-cnpj-validation": "^1.2.0",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

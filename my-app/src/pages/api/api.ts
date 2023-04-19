@@ -5,8 +5,8 @@ const apiClient = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export async function getPosts() {
-  const response = await apiClient.get('/posts');
+export async function getPosts(){
+  const response = await apiClient.get('user');
   return response.data;
 }
 

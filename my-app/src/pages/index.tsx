@@ -1,11 +1,13 @@
 "use client";
-import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import { Alert, AlertTitle, Button, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import style from "../styles/page.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as EmailValidator from 'email-validator';
-import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
+import { cnpj as cnpjFormat } from 'cpf-cnpj-validator';
 import { createPost } from "./api/api";
+import { isValidCNPJ } from 'js-cnpj-validation'
+
 
 export default function Home() {
   const[name, setName] = useState("Nome");
@@ -15,6 +17,14 @@ export default function Home() {
   const[enterpriseName, setEnterPriseName] = useState("Nome da Empresa");
   const[city, setCity] = useState("Cidade/Estado");
   const[sector, setSector] = useState("Setor");
+  const[disabled, setDisabled] = useState(true) 
+  const [sucessed, setSucessed] = useState(false)
+
+  function handleChange(e: { target: { checked: any; }; }) {
+
+    const checked = e.target.checked;
+    checked?setDisabled(false):setDisabled(true)
+  }
 
   function handleSubmit() {
     if (!name || name === "Nome"){
@@ -30,8 +40,10 @@ export default function Home() {
       return setPhone("");
     }
 
-    const cnpjValidate = cnpjValidator.isValid(cnpj) ;
-    if (!cnpjValidate || !cnpj ){
+    //const cnpjValidate = cnpjValidator.isValid(cnpj) ;
+    const cnpjFormated = cnpjFormat.format(cnpj);
+    const isValid = isValidCNPJ(cnpjFormated);
+    if (!isValid||!cnpj ){
       return setCnpj("");
     }
 
@@ -48,16 +60,20 @@ export default function Home() {
     }
 
     const data = { name, email, phone, cnpj, enterpriseName, city, sector }
-    return createPost(data)
+    createPost(data);
+    setSucessed(true);
+    return 
   }
 
-  return (
-    <div className={style.maxWidth}>
+const link = <a href="https://www.expomultimix.com/">termos de uso</a>
+const terms = `Sim, eu aceito os ${link}`
+
+const form = <div className={style.maxWidth}>
       <Stack
       component="form"
       sx={{
-        width: '22%',
-        height:'77%'
+        width: 380,
+        height: 670
       }}
       spacing={1}
       noValidate
@@ -65,13 +81,16 @@ export default function Home() {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bgcolor={"white"}
+      bgcolor={"white"}                             
       borderRadius={2}
+      marginTop={10}
+      marginBottom={10}
       >
+        <img src="logo.png" alt="logo expomm" width={80} />
         <TextField id="filled-basic" label="Nome" variant="filled" error={!name?true:false} required={!name?true:false} onChange={(e) => setName(e.target.value)} />
         <TextField id="filled-basic" label="Email" variant="filled" error={!email?true:false} required={!email?true:false} onChange={(e) => setEmail(e.target.value)} type="email"/>
         <TextField id="filled-basic" label="Telefone" variant="filled" error={!phone?true:false} required={!phone?true:false} onChange={(e) => setPhone(e.target.value)} type="tel"/>
-        <TextField id="filled-basic" label="CNPJ" variant="filled" onChange={(e) => setCnpj(e.target.value)} error={!cnpj?true:false} required={!cnpj?true:false} type="number"/>
+        <TextField id="filled-basic" label="CNPJ" variant="filled" onChange={(e) => setCnpj(e.target.value)} error={!cnpj?true:false} required={!cnpj?true:false} />
         <TextField id="filled-basic" label="Nome da Empresa" variant="filled" error={!enterpriseName?true:false} required={!enterpriseName?true:false} onChange={(e) => setEnterPriseName(e.target.value)}/>
         <TextField id="filled-basic" label="Cidade/Estado" variant="filled" error={!email?true:false} required={!email?true:false} onChange={(e) => setCity(e.target.value)}/>
 
@@ -98,8 +117,63 @@ export default function Home() {
             <MenuItem value={"Outro"}>Outro</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" onClick={handleSubmit} > Cadastrar</Button>
+      <Stack
+      sx={{
+        width: 240,
+        height: 90
+      }}
+      > 
+        <label htmlFor="checkbox">
+        <input type="checkbox" onChange={(e) => handleChange(e)}/>
+        Sim, eu aceito os
+        <a href="https://www.expomultimix.com/" target="_blank"> Termos de uso</a>
+        </label>
+        <Button variant="contained" onClick={handleSubmit} disabled={disabled} > Cadastrar</Button>
       </Stack>
+      </Stack>
+
     </div>
-  )
+const sucess = <div className={style.maxWidth}>
+<Stack
+component="form"
+sx={{
+  width: 380,
+  height: 670
+}}
+spacing={1}
+noValidate
+autoComplete="off"
+display="flex"
+alignItems="center"
+justifyContent="center"
+bgcolor={"white"}                             
+borderRadius={2}
+marginTop={10}
+marginBottom={10}
+>
+  <Stack
+  sx={{
+    width: 320,
+  }}
+  >
+  <h1 className={style.title}>Inscrição confirmada com sucesso!</h1>
+  <h1 className={style.title}>Acompanhe novidades da Expo MultiMix 2023</h1>
+  </Stack>
+  <Stack
+  display={"flex"}
+  alignItems={"center"}
+  justifyContent={"space-evenly"}
+  flexDirection={"row"}
+  width={250}
+  paddingBottom={15}
+  >
+    <img src="instagram.png" alt="instagram" width="50px" />
+    <img src="facebook.png" alt="facebook" width={50}/>
+    <img src="linkedin.png" alt="linkedin"width={50} />
+  </Stack>
+<h3>Organização</h3>
+<img src="" alt="oficina d'ideias" />
+</Stack>
+</div>
+  return sucessed? sucess : form
 }

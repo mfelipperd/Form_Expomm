@@ -1,8 +1,17 @@
 
 .maxWidth {
   width: 1280;
-  height: 100vh;
+  height: 500;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-image: url(../../public/logo.png);
+  background-repeat: inherit;
+  background-size: 455px;
+  background-attachment: fixed;
+}
+
+.title{
+  text-align: center;
 }

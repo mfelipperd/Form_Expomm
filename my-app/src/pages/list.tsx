@@ -1,5 +1,5 @@
-export default function Home() {
-    return (
-        <div>OI</div>
-    )
+import { getPosts } from './api/api';
+
+export default function List() {
+    const data = getPosts();
 }
