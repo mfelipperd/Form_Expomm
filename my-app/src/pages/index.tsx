@@ -69,7 +69,6 @@ const link = <a href="https://www.expomultimix.com/">termos de uso</a>
 const terms = `Sim, eu aceito os ${link}`
 
 const form = <div className={style.maxWidth}>
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
       <Stack
       component="form"
       sx={{
