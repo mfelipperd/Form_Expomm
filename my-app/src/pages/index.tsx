@@ -126,7 +126,7 @@ const form = <div className={style.maxWidth}>
         <label htmlFor="checkbox">
         <input type="checkbox" onChange={(e) => handleChange(e)}/>
         Sim, eu aceito os
-        <a href="https://www.expomultimix.com/" target="_blank"> Termos de uso</a>
+        <a href="https://www.expomultimix.com/pol%C3%ADtica-de-privacidade/" target="_blank"> Termos de uso</a>
         </label>
         <Button variant="contained" onClick={handleSubmit} disabled={disabled} > Cadastrar</Button>
       </Stack>
@@ -157,7 +157,7 @@ marginBottom={10}
   }}
   >
   <h1 className={style.title}>Inscrição confirmada com sucesso!</h1>
-  <h1 className={style.title}>Acompanhe novidades da Expo MultiMix 2023</h1>
+  <h1 className={style.title}>Acompanhe as novidades da Expo MultiMix 2023 nas redes sociais</h1>
   </Stack>
   <Stack
   display={"flex"}
@@ -165,14 +165,24 @@ marginBottom={10}
   justifyContent={"space-evenly"}
   flexDirection={"row"}
   width={250}
-  paddingBottom={15}
+  paddingBottom={5}
   >
-    <img src="instagram.png" alt="instagram" width="50px" />
-    <img src="facebook.png" alt="facebook" width={50}/>
-    <img src="linkedin.png" alt="linkedin"width={50} />
+      <a href="https://www.instagram.com/expomultimix/" target="_blank" rel="noopener noreferrer">
+      <img src="instagram.png" alt="instagram" width="50px" />
+      </a>
+      <a href="https://pt-br.facebook.com/expomultimix/" target="_blank" rel="noopener noreferrer">
+      <img src="facebook.png" alt="facebook" width={50}/>
+      </a>
+      <a href="https://www.linkedin.com/company/oficina-d-ideias/" target="_blank" rel="noopener noreferrer">
+        <img src="linkedin.png" alt="linkedin"width={50} />
+      </a>
+    
   </Stack>
 <h3>Organização</h3>
-<img src="" alt="oficina d'ideias" />
+<a href="https://oficinadideias.com/" target="_blank" rel="noopener noreferrer">
+  <img src="oficina.png" alt="oficina d'ideias" width={150}/>
+</a>
+
 </Stack>
 </div>
   return sucessed? sucess : form
