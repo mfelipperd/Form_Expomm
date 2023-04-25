@@ -1,1 +1,1 @@
-export const API_BASE_URL = "http://3.138.188.173:3001/";
+export const API_BASE_URL = "https://api.expomultimix.com/";
