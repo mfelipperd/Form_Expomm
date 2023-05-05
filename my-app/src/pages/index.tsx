@@ -7,6 +7,7 @@ import * as EmailValidator from 'email-validator';
 import { cnpj as cnpjFormat } from 'cpf-cnpj-validator';
 import { createPost } from "./api/api";
 import { isValidCNPJ } from 'js-cnpj-validation'
+import Image from "next/image";
 
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
   const[enterpriseName, setEnterPriseName] = useState("Nome da Empresa");
   const[city, setCity] = useState("Cidade/Estado");
   const[sector, setSector] = useState("Setor");
+  const[marketing, setMarketing] = useState("Como soube da feira?")
   const[disabled, setDisabled] = useState(true) 
   const [sucessed, setSucessed] = useState(false)
 
@@ -59,7 +61,11 @@ export default function Home() {
       return setSector("");
     }
 
-    const data = { name, email, phone, cnpj, enterpriseName, city, sector }
+    if(!marketing || marketing === "Como soube da feira?"){
+      return setMarketing("");
+    }
+
+    const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
     setSucessed(true);
     return 
@@ -73,7 +79,7 @@ const form = <div className={style.maxWidth}>
       component="form"
       sx={{
         width: 380,
-        height: 670
+        height: 750
       }}
       spacing={1}
       noValidate
@@ -86,7 +92,7 @@ const form = <div className={style.maxWidth}>
       marginTop={10}
       marginBottom={10}
       >
-        <img src="logo.png" alt="logo expomm" width={80} />
+        <Image src="/logo.png" alt="logo expomm" width={80} height={80} />
         <TextField id="filled-basic" label="Nome" variant="filled" error={!name?true:false} required={!name?true:false} onChange={(e) => setName(e.target.value)} />
         <TextField id="filled-basic" label="Email" variant="filled" error={!email?true:false} required={!email?true:false} onChange={(e) => setEmail(e.target.value)} type="email"/>
         <TextField id="filled-basic" label="Telefone" variant="filled" error={!phone?true:false} required={!phone?true:false} onChange={(e) => setPhone(e.target.value)} type="tel"/>
@@ -100,7 +106,7 @@ const form = <div className={style.maxWidth}>
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={sector}
-          label="Setor"
+          label={sector}
           error={!sector?true:false} required={!sector?true:false}
           onChange={(e) => setSector(e.target.value as string)}
 >
@@ -115,6 +121,23 @@ const form = <div className={style.maxWidth}>
             <MenuItem value={"Confecções"}>Confecções</MenuItem>
             <MenuItem value={"Calçados"}>Calçados</MenuItem>
             <MenuItem value={"Outro"}>Outro</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ m: 1, width: 230 }}>
+        <InputLabel id="marketing">Como soube da feira?</InputLabel>
+        <Select
+          labelId="marketing"
+          id="marketing"
+          value={marketing}
+          label="Como soube da feira?"
+          error={!marketing?true:false} required={!marketing?true:false}
+          onChange={(e) => setMarketing(e.target.value as string)}
+>
+            <MenuItem value={"google"}>Google</MenuItem>
+            <MenuItem value={"facebook"}>Facebook</MenuItem>
+            <MenuItem value={"instagram"}>Instagram</MenuItem>
+            <MenuItem value={"whatsapp"}>Whatsapp</MenuItem>
+            <MenuItem value={"outros"}>Outros</MenuItem>
         </Select>
       </FormControl>
       <Stack
@@ -168,19 +191,19 @@ marginBottom={10}
   paddingBottom={5}
   >
       <a href="https://www.instagram.com/expomultimix/" target="_blank" rel="noopener noreferrer">
-      <img src="instagram.png" alt="instagram" width="50px" />
+      <Image src="/instagram.png" alt="instagram" width={50} height={50}/>
       </a>
       <a href="https://pt-br.facebook.com/expomultimix/" target="_blank" rel="noopener noreferrer">
-      <img src="facebook.png" alt="facebook" width={50}/>
+      <Image src="/facebook.png" alt="facebook" width={50} height={50}/>
       </a>
       <a href="https://www.linkedin.com/company/oficina-d-ideias/" target="_blank" rel="noopener noreferrer">
-        <img src="linkedin.png" alt="linkedin"width={50} />
+        <Image src="/linkedin.png" alt="linkedin"width={50} height={50}/>
       </a>
     
   </Stack>
 <h3>Organização</h3>
 <a href="https://oficinadideias.com/" target="_blank" rel="noopener noreferrer">
-  <img src="oficina.png" alt="oficina d'ideias" width={150}/>
+  <Image src="/oficina.png" alt="oficina d'ideias" width={150} height={100}/>
 </a>
 
 </Stack>
