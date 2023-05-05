@@ -68,6 +68,9 @@ export default function Home() {
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
     setSucessed(true);
+    setTimeout(() => {
+      window.location.href = 'https://www.exemplo.com';
+    }, 10000);
     return 
   }
 
