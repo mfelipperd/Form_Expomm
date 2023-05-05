@@ -1,1 +1,1 @@
-export const API_BASE_URL = "api.expomultimix.com/";
+export const API_BASE_URL = "https://api.expomultimix.com/";
