@@ -69,7 +69,7 @@ export default function Home() {
     createPost(data);
     setSucessed(true);
     setTimeout(() => {
-      window.location.href = 'https://www.exemplo.com';
+      window.location.href = 'https://www.expomultimix.com';
     }, 10000);
     return 
   }
