@@ -12,6 +12,6 @@ export async function getPosts(){
 
 export async function createPost(data: any) {
     console.log(data);
-    const response = await apiClient.post('user', { data });
+    const response = await apiClient.post('user', data );
     return response.data;
   }
