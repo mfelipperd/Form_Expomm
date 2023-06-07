@@ -8,6 +8,7 @@ import { cnpj as cnpjFormat } from 'cpf-cnpj-validator';
 import { createPost } from "./api/api";
 import { isValidCNPJ } from 'js-cnpj-validation'
 import Image from "next/image";
+import Pixel from './componentes/Pixel';
 
 
 export default function Home() {
@@ -78,6 +79,7 @@ const link = <a href="https://www.expomultimix.com/">termos de uso</a>
 const terms = `Sim, eu aceito os ${link}`
 
 const form = <div className={style.maxWidth}>
+  <Pixel  name='FACEBOOK_PIXEL_1'/>
       <Stack
       component="form"
       sx={{
