@@ -91,20 +91,16 @@ export default function Home() {
     if(!marketing || marketing === "Como soube da feira?"){
       return setMarketing("");
     }
-
+    window.fbq('track', 'Lead');
+    
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
     setSucessed(true);
-    window.fbq('track', 'Lead');
   setTimeout(() => {
   window.location.href = 'https://www.expomultimix.com';
   }, 10000);
     return 
   }
-
-
-const link = <a href="https://www.expomultimix.com/">termos de uso</a>
-const terms = `Sim, eu aceito os ${link}`
 
 const form = <div className={style.maxWidth}>
       <Stack
