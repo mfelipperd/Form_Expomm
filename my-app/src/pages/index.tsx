@@ -2,14 +2,12 @@
 import { Alert, AlertTitle, Button, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import style from "../styles/page.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as EmailValidator from 'email-validator';
 import { cnpj as cnpjFormat } from 'cpf-cnpj-validator';
 import { createPost } from "./api/api";
 import { isValidCNPJ } from 'js-cnpj-validation'
 import Image from "next/image";
-import Pixel from './componentes/Pixel';
-
 
 export default function Home() {
   const[name, setName] = useState("Nome");
@@ -22,6 +20,34 @@ export default function Home() {
   const[marketing, setMarketing] = useState("Como soube da feira?")
   const[disabled, setDisabled] = useState(true) 
   const [sucessed, setSucessed] = useState(false)
+  
+  useEffect(() => {
+    (function (f: any, b: any, e: any, v: any, n: any, t: any, s: any) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) {
+        f._fbq = n;
+      }
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      if (s.parentNode) {
+        s.parentNode.insertBefore(t, s);
+      }
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
+
+    fbq('init', '798068891626886');
+    fbq('track', 'PageView');
+  }
+  , []);
+
 
   function handleChange(e: { target: { checked: any; }; }) {
 
@@ -30,6 +56,7 @@ export default function Home() {
   }
 
   function handleSubmit() {
+
     if (!name || name === "Nome"){
       return setName('');
     }
@@ -43,7 +70,6 @@ export default function Home() {
       return setPhone("");
     }
 
-    //const cnpjValidate = cnpjValidator.isValid(cnpj) ;
     const cnpjFormated = cnpjFormat.format(cnpj);
     const isValid = isValidCNPJ(cnpjFormated);
     if (!isValid||!cnpj ){
@@ -69,17 +95,18 @@ export default function Home() {
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
     setSucessed(true);
-    setTimeout(() => {
-      window.location.href = 'https://www.expomultimix.com';
-    }, 10000);
+    window.fbq('track', 'Lead');
+  setTimeout(() => {
+  window.location.href = 'https://www.expomultimix.com';
+  }, 10000);
     return 
   }
+
 
 const link = <a href="https://www.expomultimix.com/">termos de uso</a>
 const terms = `Sim, eu aceito os ${link}`
 
 const form = <div className={style.maxWidth}>
-  <Pixel  name='FACEBOOK_PIXEL_1'/>
       <Stack
       component="form"
       sx={{
@@ -184,8 +211,10 @@ marginBottom={10}
     width: 320,
   }}
   >
-  <h1 className={style.title}>Inscrição confirmada com sucesso!</h1>
-  <h1 className={style.title}>Acompanhe as novidades da Expo MultiMix 2023 nas redes sociais</h1>
+  <h2 className={style.title}>Inscrição confirmada com sucesso!</h2>
+  <h4 className={style.title}>A confirmação da inscrição foi enviada por e-mail. Verifique sua caixa de entrada (inclusive a caixa de Spam)</h4>
+  <h4 className={style.title}>Acompanhe as novidades da Expo MultiMix 2023 nas redes sociais</h4>
+  
   </Stack>
   <Stack
   display={"flex"}
@@ -208,10 +237,11 @@ marginBottom={10}
   </Stack>
 <h3>Organização</h3>
 <a href="https://oficinadideias.com/" target="_blank" rel="noopener noreferrer">
-  <Image src="/oficina.png" alt="oficina d'ideias" width={150} height={100}/>
+  <Image src="/oficina.png" alt="oficina d'ideias" width={150} height={80}/>
 </a>
 
 </Stack>
 </div>
   return sucessed? sucess : form
 }
+
