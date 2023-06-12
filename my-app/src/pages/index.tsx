@@ -43,6 +43,8 @@ export default function Home() {
       }
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
 
+    
+
     fbq('init', '798068891626886');
     fbq('track', 'PageView');
   }
