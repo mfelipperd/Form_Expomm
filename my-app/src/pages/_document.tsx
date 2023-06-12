@@ -1,13 +1,14 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
+  const googlePixelId = 'G-TE935BRHLJ';
   return (
     <Html lang="en">
       <Head>
-          {/* Adicione o código do pixel do Google aqui */}
-          <script
+        {/* Código do pixel do Google */}
+        <script
             async
-            src="https://www.googletagmanager.com/gtag/js?id=G-TE935BRHLJ"
+            src={`https://www.googletagmanager.com/gtag/js?id=${googlePixelId}`}
           ></script>
           <script
             dangerouslySetInnerHTML={{
@@ -15,7 +16,7 @@ export default function Document() {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'G-TE935BRHLJ');
+                gtag('config', '${googlePixelId}');
               `,
             }}
           ></script>

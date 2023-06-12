@@ -44,6 +44,18 @@ export default function Home() {
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
 
     
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-11164998549/fBqFCMaMu6oYEJW38csp',
+      'event_callback': callback
+  });
+  return false;
+};
 
     fbq('init', '798068891626886');
     fbq('track', 'PageView');
@@ -94,6 +106,7 @@ export default function Home() {
       return setMarketing("");
     }
     window.fbq('track', 'Lead');
+
     
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
