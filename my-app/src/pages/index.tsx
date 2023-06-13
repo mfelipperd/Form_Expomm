@@ -9,11 +9,9 @@ import { createPost } from "./api/api";
 import { isValidCNPJ } from 'js-cnpj-validation'
 import Image from "next/image";
 
-
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
-    gtag_report_conversion?: (url: any) => boolean;
   }
 }
 
@@ -29,48 +27,6 @@ export default function Home() {
   const[disabled, setDisabled] = useState(true) 
   const [sucessed, setSucessed] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false);
-  
-//   useEffect(() => {
-//     (function (f: any, b: any, e: any, v: any, n: any, t: any, s: any) {
-//       if (f.fbq) return;
-//       n = f.fbq = function () {
-//         n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-//       };
-//       if (!f._fbq) {
-//         f._fbq = n;
-//       }
-//       n.push = n;
-//       n.loaded = !0;
-//       n.version = '2.0';
-//       n.queue = [];
-//       t = b.createElement(e);
-//       t.async = !0;
-//       t.src = v;
-//       s = b.getElementsByTagName(e)[0];
-//       if (s.parentNode) {
-//         s.parentNode.insertBefore(t, s);
-//       }
-//     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
-
-    
-// function gtag_report_conversion(url:any) {
-//   var callback = function () {
-//     if (typeof(url) != 'undefined') {
-//       window.location = url;
-//     }
-//   };
-//   gtag('event', 'conversion', {
-//       'send_to': 'AW-11164998549/fBqFCMaMu6oYEJW38csp',
-//       'event_callback': callback
-//   });
-//   return false;
-// };
-
-//     fbq('init', '798068891626886');
-//     fbq('track', 'PageView');
-//   }
-//   , []);
-
 
 useEffect(() => {
   if (!isInitialized) {
@@ -94,24 +50,6 @@ useEffect(() => {
         s.parentNode.insertBefore(t, s);
       }
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
-
-    window.gtag_report_conversion = (url: any) => {
-      const callback = () => {
-        if (typeof url !== 'undefined') {
-          window.location = url;
-        }
-      };
-      window.gtag?.('event', 'conversion', {
-        send_to: 'AW-11164998549/fBqFCMaMu6oYEJW38csp',
-        event_callback: callback,
-      });
-      return false;
-    };
-
-    if (typeof window.fbq === 'function') {
-      window.fbq('init', '798068891626886');
-      window.fbq('track', 'PageView');
-    }
 
     setIsInitialized(true);
   }
@@ -159,17 +97,16 @@ useEffect(() => {
       return setMarketing("");
     }
     
-      if(window.fbq && window.gtag_report_conversion){
+      if(window.fbq){
         window.fbq('track', 'Lead');
-        console.log('buttonFACEBOOK');
     }
 
-      if(window.gtag_report_conversion){
-        window.gtag_report_conversion
-        console.log('buttonGOOGLE');
-      }
-    
-
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-11164998549/eJnJCO38lqMYEJW38csp',
+        event_callback: function() {
+        },
+      });
     
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
@@ -319,4 +256,4 @@ marginBottom={10}
   return sucessed? sucess : form
 }
 
-
+}
