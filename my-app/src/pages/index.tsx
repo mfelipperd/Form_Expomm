@@ -114,8 +114,7 @@ useEffect(() => {
   setTimeout(() => {
   window.location.href = 'https://www.expomultimix.com';
   }, 10000);
-    return 
-  }
+  }}
 
 const form = <div className={style.maxWidth}>
       <Stack
@@ -194,7 +193,7 @@ const form = <div className={style.maxWidth}>
         Sim, eu aceito os
         <a href="https://www.expomultimix.com/pol%C3%ADtica-de-privacidade/" target="_blank"> Termos de uso</a>
         </label>
-        <Button variant="contained" onClick={handleSubmit} disabled={disabled} > Cadastrar</Button>
+        <Button variant="contained" onClick={() => handleSubmit} disabled={disabled} > Cadastrar</Button>
       </Stack>
       </Stack>
 
@@ -254,6 +253,4 @@ marginBottom={10}
 </Stack>
 </div>
   return sucessed? sucess : form
-}
-
 }
