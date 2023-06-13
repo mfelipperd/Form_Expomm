@@ -70,7 +70,7 @@ useEffect(() => {
     if(!emailValidator || !email ){
       return setEmail("");
     }
-
+    
     if (phone.length !== 11 || !phone || phone === "Telefone"){
       return setPhone("");
     }
@@ -100,7 +100,7 @@ useEffect(() => {
       if(window.fbq){
         window.fbq('track', 'Lead');
     }
-
+    
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'conversion', {
         send_to: 'AW-11164998549/eJnJCO38lqMYEJW38csp',
@@ -193,7 +193,7 @@ const form = <div className={style.maxWidth}>
         Sim, eu aceito os
         <a href="https://www.expomultimix.com/pol%C3%ADtica-de-privacidade/" target="_blank"> Termos de uso</a>
         </label>
-        <Button variant="contained" onClick={() => handleSubmit} disabled={disabled} > Cadastrar</Button>
+        <Button variant="contained" onClick={handleSubmit} disabled={disabled} > Cadastrar</Button>
       </Stack>
       </Stack>
 
