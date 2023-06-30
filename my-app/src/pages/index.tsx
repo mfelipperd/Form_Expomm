@@ -29,7 +29,6 @@ export default function Home() {
   const [isInitialized, setIsInitialized] = useState(false);
 
 useEffect(() => {
-  if (!isInitialized) {
     (function (f: any, b: any, e: any, v: any, n: any, t: any, s: any) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -50,10 +49,12 @@ useEffect(() => {
         s.parentNode.insertBefore(t, s);
       }
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', {}, {}, {});
-
-    setIsInitialized(true);
-  }
-}, [isInitialized]);
+if(!!window.fbq){
+    window.fbq('init', '798068891626886');
+    window.fbq('track', 'PageView');
+}
+    
+}, []);
 
   function handleChange(e: { target: { checked: any; }; }) {
 
@@ -96,10 +97,10 @@ useEffect(() => {
     if(!marketing || marketing === "Como soube da feira?"){
       return setMarketing("");
     }
-    
-      if(window.fbq){
-        window.fbq('track', 'Lead');
-    }
+
+    if (!!window.fbq){
+      window.fbq('track', 'Lead');
+    };
     
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'conversion', {
@@ -110,7 +111,7 @@ useEffect(() => {
     
     const data = { name, email, phone, cnpj, enterpriseName, city, sector, marketing }
     createPost(data);
-    setSucessed(true);
+  setSucessed(true);
   setTimeout(() => {
   window.location.href = 'https://www.expomultimix.com';
   }, 10000);
